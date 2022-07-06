@@ -1,0 +1,59 @@
+{
+  "routes": [
+    {
+      "name": "api/login",
+      "type": "mysql",
+      "method": "post",
+      "host": "localhost",
+      "user": "dev",
+      "password": "123456",
+      "db": "siga",
+      "query": "select api_login(?,?) as data"
+    },
+    {
+      "name": "api/novo",
+      "type": "mysql",
+      "method": "post",
+      "host": "localhost",
+      "user": "dev",
+      "password": "123456",
+      "db": "siga",
+      "query": "call novo_usuario( ?, '?', md5(?), ?, '?')"
+    },
+    {
+      "name": "api/agendar",
+      "type": "mysql",
+      "method": "post",
+      "host": "localhost",
+      "user": "dev",
+      "password": "123456",
+      "db": "siga",
+      "query": "select api_agendamento(?,?,?,?) as data"
+    },
+      {
+      "name": "api/client",
+      "type": "mysql",
+      "method": "post",
+      "host": "localhost",
+      "user": "dev",
+      "password": "123456",
+      "db": "siga",
+      "query": "select l.nome, l.email, l.id, (select id from agendamento aa where aa.user_id = l.id and concluido = 0 order by id desc limit 1) as ticket from login l,sessions s where l.id = s.client_id and session_id = ?"
+    },
+    {
+      "name": "api/ticket",
+      "type": "mysql",
+      "method": "post",
+      "host": "localhost",
+      "user": "dev",
+      "password": "123456",
+      "db": "siga",
+      "query": "select liberado from agendamento where id = ? order by id desc limit 1"
+    },
+    {
+      "name": "api/email",
+      "method": "mail"
+    }
+
+  ]
+  }
