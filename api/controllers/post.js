@@ -1,23 +1,22 @@
 'use strict'
 
-const DB = require('./mysqlbkp');
+const Mysql = require('./mysqlbkp');
 
 
 async function getResult(name, query, params = null){
 
     const request = params != null?Object.values(params):'';
 
-    console.log(query)
     console.log(request)
     try {
-        const conn = await DB.newConn(name);
-        const [result] = await conn.query(query, request);   
+        const db = new Mysql(name)
+        const [result] = await db.Post(request);  
+        await db.Kill() 
         console.log(result)
-        conn.end()
         return result;
         
     } catch (error) {
-        return error.message;
+        console.error;
     }
 
 }

@@ -15,7 +15,7 @@ const mailOptions = {
         from: 'danielproenca89@gmail.com', // sender address
         to: body.email, // receiver (use array of string for a list)
         subject: 'Siga', // Subject line
-        html: `<h1>Olá ${body.nome}! Sua visita foi solicitada.</h1> \n Você receberá em breve um email de confirmação \n <h2>Ticket: ${body.ticket}</h2>`// plain text body
+        html: `<h1>Olá, ${body.nome}!</h1> \n ${body.body}`
       };
 console.log(body)
 

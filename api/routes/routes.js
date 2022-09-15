@@ -1,32 +1,54 @@
 module.exports = async app => {
-    const get = require('../controllers/get');
-    const post = require('../controllers/post');
-    const mail = require('../controllers/mail');
-    const servers = app.data.querys;
-    let methods = [];
-    console.log(servers)
+    const Digest = require('../controllers/digest')
 
-    servers.routes.forEach((e)=>{
 
-    if(e.method === 'get'){
-    methods.push(app.route('/'+e.name)
-      .get(async (req, res)=>res.status(200).json(await get.getResult(e.name, e.query))));
 
-    }
+    app.route('/user')
+      .post(async (req, res)=>{
 
-    if(e.method === 'post'){
-    methods.push(app.route('/'+e.name)
-      .post(async (req, res)=>res.status(200).json(await post.getResult(e.name, e.query, req.body))));
-  
-      }
-  
-    if (e.method === 'mail'){
-    methods.push(app.route('/'+e.name)
-      .post(async (req, res)=>res.status(200).json(await mail.sendmail(req.body))))
+       
+          let digest = new Digest('insertUser', req.body); 
+          
+          const response = await digest.fire()
+          res.send(response.data.toString())
+      
+       
+      })
 
-    }
+      
+    app.route('/user/foto')
+    .post(async (req, res)=>{
 
+     
+        let digest = new Digest('addPhoto', req.body); 
+        const response = await digest.fire()
+        res.send(response.data.toString())
+    
+     
     })
 
-  return methods;
+    app.route('/user/delete')
+    .put(async (req, res)=>{
+
+     
+        let digest = new Digest('deleteUser', req.body); 
+        const response = await digest.fire()
+        res.send(response.data.toString())
+    
+     
+    })
+
+
+    
+    app.route('/user/search')
+    .post(async (req, res)=>{
+
+     
+        let digest = new Digest('searchUser', req.body); 
+        const response = await digest.fire()
+        res.send(response.data.toString())
+    
+     
+    })
+
 }

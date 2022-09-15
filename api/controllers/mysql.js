@@ -4,10 +4,10 @@ const mysql = require('mysql2');
 (async () => {
   let pool = mysql
     .createPool({
-      host: 'localhost',
-      user: 'dev',
-      password: '123456',
-      database:'siga',
+      host: '194.195.86.239',
+      user: 'root',
+      password: 'rosacruz89D',
+      database:'sigaapi',
       connectionLimit: 10,
     })
     .promise();
